@@ -1,30 +1,47 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+  <div>
+    <navigation-bar v-if="pages"></navigation-bar>
+    <div id="addMargin">
+      <router-view/>
+    </div>
   </div>
-  <router-view/>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+  import NavigationBar from './views/NavigationBar.vue';
 
-#nav {
-  padding: 30px;
+  export default {
+    components: {
+      NavigationBar,
+    },
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
+    computed: {
+      pages() {
+        if( window.location.href != 'http://localhost:8080/login' && 
+            window.location.href != 'http://localhost:8080/register' && 
+            window.location.href != 'http://localhost:8080/blogs-page' &&
+            window.location.href != 'http://localhost:8080/favorite-blogs' &&
+            window.location.href != 'http://localhost:8080/profile') 
+          {
+          return true;
+        } else {
+          return false;
+        }
+      },
+    },
 
-    &.router-link-exact-active {
-      color: #42b983;
+    mounted() {
+      const addSideMargin = document.getElementById('addMargin')
+      if( window.location.href != 'http://localhost:8080/login' && 
+          window.location.href != 'http://localhost:8080/register' && 
+          window.location.href != 'http://localhost:8080/blogs-page' &&
+          window.location.href != 'http://localhost:8080/favorite-blogs' &&
+          window.location.href != 'http://localhost:8080/profile')
+        {
+        addSideMargin.style.marginLeft = "300px"
+      } else {
+        addSideMargin.style.marginLeft = "0px"
+      }
     }
   }
-}
-</style>
+</script>
